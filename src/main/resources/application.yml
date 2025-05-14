@@ -1,0 +1,6 @@
+server:
+  port: 5040
+
+spring:
+  application:
+    name: peggi
