@@ -23,7 +23,7 @@ public class SuwonNaviService {
                 "engineering3", "engineering4", "sculptureHall", "designArtCollege", "aceCenter",
                 "swFusionCollege", "lifeCareScienceCollege", "socialCollege", "musicCollege",
                 "amarensHall", "dormitory", "globalManagement", "globalTalentCollege", "administrationBuilding",
-                "backGate"
+                "backGate", "centralLibrary", "unionHall"
         );
 
         return new CollegeResponse(buildings);
@@ -306,6 +306,55 @@ public class SuwonNaviService {
         addEdge("globalTalentCollege", "backGate", 12);
 
         addEdge("administrationBuilding", "backGate", 15);
+
+        addEdge("centralLibrary", "mainGate", 16);
+        addEdge("centralLibrary", "humanitiesCollege", 16);
+        addEdge("centralLibrary", "gym", 14);
+        addEdge("centralLibrary", "futureInnovationCenter", 14);
+        addEdge("centralLibrary", "innovationEngineeringCollege", 12);
+        addEdge("centralLibrary", "advancedScienceInstitute", 12);
+        addEdge("centralLibrary", "engineering1", 13);
+        addEdge("centralLibrary", "engineering2", 14);
+        addEdge("centralLibrary", "engineering3", 15);
+        addEdge("centralLibrary", "engineering4", 16);
+        addEdge("centralLibrary", "sculptureHall", 12);
+        addEdge("centralLibrary", "designArtCollege", 8);
+        addEdge("centralLibrary", "aceCenter", 10);
+        addEdge("centralLibrary", "swFusionCollege", 7);
+        addEdge("centralLibrary", "lifeCareScienceCollege", 7);
+        addEdge("centralLibrary", "socialCollege", 13);
+        addEdge("centralLibrary", "musicCollege", 14);
+        addEdge("centralLibrary", "amarensHall", 16);
+        addEdge("centralLibrary", "dormitory", 19);
+        addEdge("centralLibrary", "globalManagement", 20);
+        addEdge("centralLibrary", "globalTalentCollege", 11);
+        addEdge("centralLibrary", "administrationBuilding", 10);
+        addEdge("centralLibrary", "backGate", 16);
+        addEdge("centralLibrary", "unionHall", 9);
+
+        addEdge("unionHall", "mainGate", 10);
+        addEdge("unionHall", "humanitiesCollege", 10);
+        addEdge("unionHall", "gym", 8);
+        addEdge("unionHall", "futureInnovationCenter", 5);
+        addEdge("unionHall", "innovationEngineeringCollege", 3);
+        addEdge("unionHall", "advancedScienceInstitute", 3);
+        addEdge("unionHall", "engineering1", 3);
+        addEdge("unionHall", "engineering2", 4);
+        addEdge("unionHall", "engineering3", 5);
+        addEdge("unionHall", "engineering4", 6);
+        addEdge("unionHall", "sculptureHall", 4);
+        addEdge("unionHall", "designArtCollege", 3);
+        addEdge("unionHall", "aceCenter", 1);
+        addEdge("unionHall", "swFusionCollege", 4);
+        addEdge("unionHall", "lifeCareScienceCollege", 7);
+        addEdge("unionHall", "socialCollege", 10);
+        addEdge("unionHall", "musicCollege", 11);
+        addEdge("unionHall", "amarensHall", 13);
+        addEdge("unionHall", "dormitory", 16);
+        addEdge("unionHall", "globalManagement", 17);
+        addEdge("unionHall", "globalTalentCollege", 9);
+        addEdge("unionHall", "administrationBuilding", 8);
+        addEdge("unionHall", "backGate", 9);
 
 
     }
