@@ -16,13 +16,16 @@ public class RouteService {
     private final RestTemplate restTemplate;
 
     public ResponseEntity<ChatToLlmResponse> chatToLlm(ChatToLlmRequest requestBody) {
-        String llmUrl = "http://localhost:5042/"; // LLM 서버 주소
+        String llmUrl = "http://ahnai1.suwon.ac.kr:5042/api/simple-chat";
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> request = new HttpEntity<>(requestBody.getQuestion(), headers);
+        HttpEntity<ChatToLlmRequest> request = new HttpEntity<>(requestBody, headers);
+
         return restTemplate.postForEntity(llmUrl, request, ChatToLlmResponse.class);
     }
+
 }
 
 
