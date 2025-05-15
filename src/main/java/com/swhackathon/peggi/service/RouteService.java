@@ -16,7 +16,7 @@ public class RouteService {
     private final RestTemplate restTemplate;
 
     public ResponseEntity<ChatToLlmResponse> chatToLlm(ChatToLlmRequest requestBody) {
-        String llmUrl = "http://localhost:5041/"; // LLM 서버 주소
+        String llmUrl = "http://localhost:5042/"; // LLM 서버 주소
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
