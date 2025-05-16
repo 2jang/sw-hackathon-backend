@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: peggi
+  config:
+    import:
+      - classpath:/yml/application-local.yml
+      - classpath:/yml/application-prod.yml
+
+
