@@ -10,7 +10,7 @@ public class SecurityConfig implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://ahnai1.suwon.ac.kr","https://suwonai.store")
+                .allowedOrigins("http://ahnai1.suwon.ac.kr","http://suwonai.store")
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
