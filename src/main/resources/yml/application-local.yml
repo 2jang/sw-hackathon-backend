@@ -1,0 +1,30 @@
+# log setting
+logging:
+  level:
+    com:
+      suwonai:
+        backend: debug
+
+#email url
+email:
+  config:
+    baseUrl: "http://localhost:5041"
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/suwonai
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true

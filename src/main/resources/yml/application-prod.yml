@@ -1,0 +1,33 @@
+server:
+  port: 5041
+
+#log setting
+logging:
+  level:
+    com:
+      suwonai:
+        Server: debug
+
+#email url
+email:
+  config:
+    baseUrl: ${PROD_URL}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ahnai1.suwon.ac.kr:5043/suwonai_database?useSSL=false&serverTimezone=Asia/Seoul
+    username: ${PROD_SQL_USER}
+    password: ${PROD_SQL_PW}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: false
