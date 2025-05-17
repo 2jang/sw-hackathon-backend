@@ -25,9 +25,9 @@ public class ClickService {
         if (!clickRateLimiter.tryAcquire(clickId)) {
             throw new RateLimitExceededException("1초당 10회 요청 제한을 초과했습니다.");
         }
-        Click click = clickRepository.findById(clickId).orElseThrow();
-        click.setClickNum(click.getClickNum() + 1);
-        return clickRepository.save(click);
+        clickRepository.incrementClickNum(clickId);
+
+        return clickRepository.findById(clickId).orElseThrow();
     }
 
     public List<ClickResponse> getClickNum(){
