@@ -28,7 +28,7 @@ public class ClickRateLimiter {
                 count = 1;
                 return true;
             } else {
-                if (count < 10) {
+                if (count < 20) {
                     count++;
                     return true;
                 }
