@@ -9,4 +9,8 @@ spring:
       - classpath:/yml/application-local.yml
       - classpath:/yml/application-prod.yml
 
+openrouter:
+  api:
+    key: your_openrouter_api_key
+
 
