@@ -11,9 +11,7 @@ public class SecurityConfig implements WebMvcConfigurer{
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "http://localhost:5173", // 로컬 개발용 프론트엔드 주소 추가
-                        "http://ahnai1.suwon.ac.kr",
-                        "http://suwonai.store.s3-website-us-east-1.amazonaws.com"
+                        "http://localhost:5173"
                 )
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
