@@ -11,6 +11,5 @@ spring:
 
 openrouter:
   api:
-    key: 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
-
+    key: your_openrouter_api_key
 
