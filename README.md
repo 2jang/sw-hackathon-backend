@@ -1,5 +1,6 @@
 # 🎓 LLM을 이용한 SW융합대학 웹사이트 제작 해커톤 (백엔드) 🏫
 
+[![Uptime Robot status](https://img.shields.io/uptimerobot/status/m800668201-c738159d6dea0ef0205cad01?up_message=%20%EC%84%9C%EB%B2%84%20%EC%8B%A4%ED%96%89%EC%A4%91!&down_message=%EC%84%9C%EB%B2%84+%EC%98%A4%ED%94%84%EB%9D%BC%EC%9D%B8&style=for-the-badge)](https://uswai.2jang.me)  
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
 [![Gradle](https://img.shields.io/badge/Gradle-8.13-02303A?style=for-the-badge&logo=gradle&logoColor=white)](https://gradle.org/)
