@@ -1,5 +1,6 @@
 # 🎓 LLM을 이용한 SW융합대학 웹사이트 제작 해커톤 (백엔드) 🏫
 
+[![Uptime Robot status](https://img.shields.io/uptimerobot/status/m800668201-c738159d6dea0ef0205cad01?up_message=Online&down_message=Offline&style=for-the-badge&logo=uptimerobot&logoColor=white&label=status&labelColor=065f46&color=10b981)](https://uswai.2jang.me)  
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
 [![Gradle](https://img.shields.io/badge/Gradle-8.13-02303A?style=for-the-badge&logo=gradle&logoColor=white)](https://gradle.org/)
@@ -19,7 +20,7 @@ LLM을 이용한 수원대학교 지능형SW융합대학의 정보 제공 및 �
 * 클릭 요청에 대한 비율 제한(Rate Limiting) 기능 적용 (초당 20회/항목)
 * synchronized를 사용하여 값 업데이트 도중 경쟁 상태가 발생해도 순차적으로 처리
 
-### 💬 AI 기반 질의응답 (LLM 연동)
+### 💬 챗봇 (LLM 연동)
 * OpenRouter를 통해 Google의 Gemma LLM 모델 연동
 * 사용자 질문(예: 학교 생활, 졸업 요건 등)에 대한 답변을 stream 형식으로 제공 (딜레이 감소 및 시각적 효과)
 * 경로: `/route/stream`
