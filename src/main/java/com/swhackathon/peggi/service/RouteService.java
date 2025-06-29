@@ -28,7 +28,7 @@ public class RouteService {
     private String openRouterApiKey;
 
     private final String OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-    private final String MODEL_NAME = "google/gemma-3-1b-it:free";
+    private final String MODEL_NAME = "google/gemma-3-4b-it:free";
 
     public Mono<String> streamFromLlm(ChatToLlmRequest request) {
         OpenRouterRequest.Message userMessage = new Message("user", request.getQuestion());
