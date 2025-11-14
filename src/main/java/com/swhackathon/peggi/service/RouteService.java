@@ -13,9 +13,13 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.codec.ServerSentEvent;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +42,7 @@ public class RouteService {
                 true
         );
 
-        return webClient.post()
+        Flux<ServerSentEvent<String>> sseFlux = webClient.post()
                 .uri(OPENROUTER_API_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + openRouterApiKey)
@@ -51,26 +55,33 @@ public class RouteService {
                             return Mono.error(new RuntimeException("OpenRouter API 에러: " + res.statusCode() + " - " + body));
                         })
                 )
-                .bodyToFlux(String.class)
+                .bodyToFlux(new ParameterizedTypeReference<ServerSentEvent<String>>() {});
+
+        Flux<String> dataFlux = sseFlux
+                .map(ServerSentEvent::data)
+                .filter(Objects::nonNull)
                 .map(this::stripPrefix)
                 .takeUntil(line -> line.trim().equals("[DONE]"))
                 .filter(line -> !line.trim().equals("[DONE]") && !line.trim().isEmpty())
                 .map(this::parseOpenRouterChunk)
-                .onErrorContinue((err, obj) -> log.error("스트림 처리 중 오류 발생. Data: {}, Error: {}", obj, err.getMessage(), err))
-                .reduce("", String::concat) // 모든 청크를 하나의 문자열로 합침
+                .onErrorContinue((err, obj) -> log.error("스트림 처리 중 오류 발생. Data: {}, Error: {}", obj, err.getMessage(), err));
+
+        Mono<String> streamingMono = dataFlux
+                .reduce("", String::concat)
                 .map(finalString -> {
                     if (finalString == null || finalString.isEmpty()) {
-                        return ""; // 또는 상황에 따라 null 반환
+                        return "";
                     }
                     String processedString = finalString;
-
-                    // 1. 문자열 끝의 모든 공백(줄바꿈 포함) 제거
                     processedString = processedString.stripTrailing();
-
-                    // 2. 문자열 시작의 모든 공백(줄바꿈 포함) 제거
                     processedString = processedString.stripLeading();
                     return processedString;
                 });
+
+        return streamingMono.onErrorResume(err -> {
+            log.error("SSE 스트리밍 실패로 비스트리밍으로 폴백합니다. Error: {}", err.getMessage(), err);
+            return fallbackNonStreaming(openRouterRequest);
+        });
     }
 
     private String stripPrefix(String rawEventData) {
@@ -97,6 +108,52 @@ public class RouteService {
             }
         } catch (Exception e) {
             log.error("OpenRouter 청크 파싱 오류. Chunk: '{}', Error: {}", jsonChunk, e.getMessage(), e);
+        }
+        return "";
+    }
+
+    private Mono<String> fallbackNonStreaming(OpenRouterRequest originalRequest) {
+        OpenRouterRequest nonStreamRequest = new OpenRouterRequest(
+                originalRequest.getModel(),
+                originalRequest.getMessages(),
+                false
+        );
+
+        return webClient.post()
+                .uri(OPENROUTER_API_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + openRouterApiKey)
+                .bodyValue(nonStreamRequest)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(HttpStatusCode::isError, res ->
+                        res.bodyToMono(String.class).flatMap(body -> {
+                            log.error("OpenRouter API 에러(Non-Stream): {} - {}", res.statusCode(), body);
+                            return Mono.error(new RuntimeException("OpenRouter API 에러(Non-Stream): " + res.statusCode() + " - " + body));
+                        })
+                )
+                .bodyToMono(String.class)
+                .map(this::parseNonStreamingOpenRouterResponse)
+                .onErrorResume(err -> {
+                    log.error("Non-Stream 요청도 실패했습니다. Error: {}", err.getMessage(), err);
+                    return Mono.error(err);
+                });
+    }
+
+    private String parseNonStreamingOpenRouterResponse(String json) {
+        try {
+            JsonNode rootNode = objectMapper.readTree(json);
+            JsonNode choicesNode = rootNode.path("choices");
+            if (choicesNode.isArray() && !choicesNode.isEmpty()) {
+                JsonNode firstChoice = choicesNode.get(0);
+                JsonNode messageNode = firstChoice.path("message");
+                JsonNode contentNode = messageNode.path("content");
+                if (contentNode.isTextual()) {
+                    return contentNode.asText();
+                }
+            }
+        } catch (Exception e) {
+            log.error("OpenRouter 응답 파싱 오류(Non-Stream). Body: '{}', Error: {}", json, e.getMessage(), e);
         }
         return "";
     }

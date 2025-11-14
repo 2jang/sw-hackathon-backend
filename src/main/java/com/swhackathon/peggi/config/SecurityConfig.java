@@ -17,4 +17,14 @@ public class SecurityConfig implements WebMvcConfigurer{
     //             .allowedHeaders("*")
     //             .allowCredentials(true);
     // }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(
+                        "https://suwonai.2jang.dev"
+                )
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowedHeaders("*");
+    }
 }
